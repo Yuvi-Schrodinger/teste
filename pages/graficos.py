@@ -16,7 +16,7 @@ campaign_status_count.columns = ['status', 'count']
 campaign_id = "120208363974670077"
 data_over_time_data = fb_graph_api.get_data_over_time(campaign_id)
 data_over_time = pd.DataFrame(data_over_time_data['data'])
-data_over_time['date_start'] = pd.to_datetime(data_over_time['date_start'], format='%d/%m/%Y')
+data_over_time['date_start'] = pd.to_datetime(data_over_time['date_start'])
 data_over_time_sorted_cpm = data_over_time.sort_values(by='cpm',ascending=False)
 data_over_time_sorted_cpc = data_over_time.sort_values(by='cpc',ascending=False)
 
