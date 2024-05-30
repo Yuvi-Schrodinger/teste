@@ -1,5 +1,6 @@
 import requests
 import time
+import json
 
 class GraphAPI:
     def __init__(self, ad_acc, fb_api):
@@ -9,7 +10,7 @@ class GraphAPI:
             "adset_id", "clicks", "campaign_id", 
             "frequency", "date_start"
         ]
-        self.token = fb_api
+        self.token = "&access_token=" + fb_api
         self.ad_acc = ad_acc
         self.session = requests.Session()
 
@@ -40,31 +41,39 @@ class GraphAPI:
 
         raise Exception("Maximum number of attempts reached. Request failed.")
 
-    def get_insights(self, level="campaign"):
-        endpoint = f"act_{self.ad_acc}/insights"
-        params = {"fields": ",".join(self.api_fields), "level": level}
-        return self.make_request(endpoint, params)
+    def get_insights(self, ad_acc, level="adset"):
+        url = self.base_url + "act_" + str(ad_acc)
+        url += "/insights?level=" + level
+        url += "&fields=" + ",".join(self.api_fields)
 
-    def get_campaigns_status(self):
-        endpoint = f"act_{self.ad_acc}/campaigns"
-        params = {"fields": "name,status,id"}
-        return self.make_request(endpoint, params)
+        data = requests.get(url + self.token)
+        data = json.loads(data._content.decode("utf-8"))
+        return data
+
+    def get_campaigns_status(self, ad_acc):
+        url = self.base_url + "act_" + str(ad_acc)
+        url += "/campaigns?fields=name,status{name, id}"
+        data = requests.get(url + self.token)
+        return json.loads(data._content.decode("utf-8"))
+
 
     def get_adset_status(self):
         endpoint = f"act_{self.ad_acc}/adsets"
         params = {"fields": "name,status,id"}
         return self.make_request(endpoint, params)
 
-    def get_adset_insights(self):
-        endpoint = f"act_{self.ad_acc}/adsets"
-        params = {"fields": "name,insights"}
-        return self.make_request(endpoint, params)
+    def get_adset_status(self, ad_acc):
+        url = self.base_url + "act_" + str(ad_acc)
+        url += "/adsets?fields=name,status,id"
+        data = requests.get(url + self.token)
+        return json.loads(data._content.decode("utf-8"))
 
     def get_data_over_time(self, campaign_id):
-        endpoint = f"{campaign_id}/insights"
-        params = {
-            "fields": ",".join(self.api_fields),
-            "date_preset": "last_30d",
-            "time_increment": "1"
-        }
-        return self.make_request(endpoint, params)
+        url = self.base_url + f"{campaign_id}/insights"
+        url += "?fields=" + ",".join(self.api_fields)
+        url += "&date_preset=last_30d"
+        url += "&time_increment=1"
+        url += self.token
+        
+        data = requests.get(url)
+        return json.loads(data._content.decode("utf-8"))
