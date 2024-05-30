@@ -9,7 +9,7 @@ ad_acc = "956757482423549"
 fb_graph_api = GraphAPI(ad_acc, fb_api)
 
 insights = pd.DataFrame(fb_graph_api.get_insights()['data'])
-campaign_status = pd.DataFrame(fb_graph_api.get_campaigns_status()['data'])
+campaign_status = pd.DataFrame(fb_graph_api.get_campaigns_status())
 adset_status = pd.DataFrame(fb_graph_api.get_adset_status()['data'])
 media_cpc = insights['cpc'].astype(float).mean()
 media_cpm = insights['cpm'].astype(float).mean()
