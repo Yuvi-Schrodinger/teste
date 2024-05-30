@@ -47,8 +47,7 @@ class GraphAPI:
         url += "&fields=" + ",".join(self.api_fields)
 
         data = requests.get(url + self.token)
-        data = json.loads(data._content.decode("utf-8"))
-        return data
+        return json.loads(data._content.decode("utf-8"))
 
     def get_campaigns_status(self, ad_acc):
         url = self.base_url + "act_" + str(ad_acc)
