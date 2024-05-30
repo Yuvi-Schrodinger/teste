@@ -8,9 +8,10 @@ fb_api = open("tokens/token").read()
 ad_acc = "956757482423549"
 fb_graph_api = GraphAPI(ad_acc, fb_api)
 
-insights = pd.DataFrame(fb_graph_api.get_insights())
-campaign_status = pd.DataFrame(fb_graph_api.get_campaigns_status())
-adset_status = pd.DataFrame(fb_graph_api.get_adset_status())
+insights = pd.DataFrame(fb_graph_api.get_insights(ad_acc)['data'])
+
+campaign_status = pd.DataFrame(fb_graph_api.get_campaigns_status(ad_acc)['data'])
+adset_status = pd.DataFrame(fb_graph_api.get_adset_status(ad_acc)['data'])
 media_cpc = insights['cpc'].astype(float).mean()
 media_cpm = insights['cpm'].astype(float).mean()
 media_freq = insights['frequency'].astype(float).mean()
