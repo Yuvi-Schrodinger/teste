@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
-from pages import campanhas, graficos
-from Isaloka import GraphAPI
+from Isaloka import *
 
 #-----------------------------------------------------------------------------------------------------
 
@@ -15,16 +14,16 @@ st.title('Dashboard Isa')
 #-----------------------------------------------------------------------------------------------------------
 # Sidebar and header
 st.header("Status de Campanha")
-campaign_status = pd.DataFrame(fb_graph_api.get_campaigns_status()['data'])
+campaign_status = pd.DataFrame(fb_graph_api.get_campaigns_status(ad_acc)['data'])
 st.write(campaign_status)
 
 
 st.header("Status de Conjuntos de Anuncios")
-adset_status = pd.DataFrame(fb_graph_api.get_adset_status()['data'])
+adset_status = pd.DataFrame(fb_graph_api.get_adset_status(ad_acc)['data'])
 st.write(adset_status)
 
 st.header("Insights")
-insights = pd.DataFrame(fb_graph_api.get_insights()['data'])
+insights = pd.DataFrame(fb_graph_api.get_insights(ad_acc)['data'])
 insights['date_start'] = pd.to_datetime(insights['date_start'], format='%Y-%m-%d')
 insights['date_start'] = insights['date_start'].dt.strftime('%d/%m/%Y')
 insights['date_stop'] = pd.to_datetime(insights['date_stop'], format='%Y-%m-%d')
