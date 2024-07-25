@@ -5,7 +5,7 @@ from Isaloka import *
 #-----------------------------------------------------------------------------------------------------
 
 # Load API token and ad account ID
-fb_api = open("tokens/token").read()
+fb_api = st.secrets['db_token']
 ad_acc = "956757482423549"
 fb_graph_api = GraphAPI(ad_acc, fb_api)
 
