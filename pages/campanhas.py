@@ -4,7 +4,7 @@ import streamlit as st
 from Isaloka import GraphAPI
 
 st.header("Campaign status")
-fb_api = open("tokens/token").read()
+fb_api = st.secrets['db_token']
 ad_acc = "956757482423549"
 fb_graph_api = GraphAPI(ad_acc, fb_api)
 
