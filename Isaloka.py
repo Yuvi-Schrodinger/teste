@@ -72,7 +72,7 @@ class GraphAPI:
         url += "?fields=" + ",".join(self.api_fields)
         url += "&time_range=("since":"2024-05-01","until":"2024-08-31)"
         url += "&time_increment=1"
-        url += self.token0
+        url += self.token
         
         data = requests.get(url)
         return json.loads(data._content.decode("utf-8"))
