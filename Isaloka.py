@@ -70,7 +70,7 @@ class GraphAPI:
     def get_data_over_time(self, campaign_id):
         url = self.base_url + f"{campaign_id}/insights"
         url += "?fields=" + ",".join(self.api_fields)
-        url += "&time_range=("since":"2024-05-01","until":"2024-08-31)"
+        url += "&date_present=90D"
         url += "&time_increment=1"
         url += self.token
         
